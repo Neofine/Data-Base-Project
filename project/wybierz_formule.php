@@ -8,6 +8,10 @@
 	  width: 100%;
 	  padding: 10px;
   }
+  a {
+	font-size: 24px;
+	color: hotpink;
+  }
   h2 {
     color: rgb(152, 212, 197);
     text-align: center;
@@ -38,6 +42,7 @@
   </HEAD>
   <BODY>
 	   <H2> Wybierz formułę, której odpowiadający ranking chcesz zobaczyć </H2>
+	   <div class="center">
 	  <?php
 	  $conn = oci_pconnect("am418419", "rampampam", "labora.mimuw.edu.pl/LABS");
 	  
@@ -48,9 +53,10 @@
         } 
         
 	  $gra = $_GET['gra'];
-      $id_stmt = oci_parse($conn, "SELECT idFormuly FROM Ranking where gra = '$gra'");
+      $id_stmt = oci_parse($conn, "SELECT DISTINCT idFormuly FROM Ranking where gra = '$gra'");
       oci_execute($id_stmt, OCI_NO_AUTO_COMMIT);
       
+
 	  while (($id_row = oci_fetch_array($id_stmt, OCI_BOTH))) {
 		  $f_stmt = oci_parse($conn, "SELECT formula FROM SystemWyliczania where id = $id_row[0]");
 	      oci_execute($f_stmt, OCI_NO_AUTO_COMMIT);
@@ -67,5 +73,6 @@
 	<FORM ACTION="strona_glowna.php">
     <INPUT TYPE="SUBMIT" class="button button2" VALUE="Strona główna">
 	</FORM>
+	</div>
   </BODY>
 </HTML>

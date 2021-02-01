@@ -8,6 +8,9 @@
 	  width: 100%;
 	  padding: 10px;
   }
+  a {
+	color: hotpink;
+  }
   h2 {
     color: rgb(152, 212, 197);
     text-align: center;
@@ -55,11 +58,14 @@
 	  $gra = $row[1];
       $ktoWygral = $row[2];
 	  $kiedyRozegrana = substr($row[3], 0, -10).substr($row[3], -3, 3);
-      
+	  $waga = $row[4];
+      $opis = $row[5];
       
       ?>
 	  <H2> Rozgrywka w grę <?php echo $gra, " id = ", $id; ?>  </H2>
 	  <?php
+	  echo "Format: ".$opis."<BR>";
+	  echo "Waga rozgrywki: ".$waga."<BR>";
 	  echo "Zwycięzca: ", " <A HREF=\"profil.php?gracz=".$ktoWygral."\">".$ktoWygral."<A><BR>";
 	  echo "Rozegrana: ", $kiedyRozegrana, "<BR><BR>";
 	  

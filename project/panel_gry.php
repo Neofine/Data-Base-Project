@@ -8,6 +8,13 @@
 	  width: 100%;
 	  padding: 10px;
   }
+  .chart_box {
+	 width: 600px;
+	 margin: 0 auto;  
+  }
+  a {
+	color: hotpink;
+  }
   h2 {
     color: rgb(152, 212, 197);
     text-align: center;
@@ -34,23 +41,69 @@
 }
 </style>
   <HEAD>
-    <TITLE> Panel gry </TITLE>
-  </HEAD>
-  <BODY>
-	   <div class="center">
 	  <?php
 	  $gracz = $_GET['gracz'];
 	  $gra = $_GET['gra'];
-	  ?>
-	  <H2> <?php echo $gra, ' - ', $gracz; ?> </H2>
-	  <?php
 	  $conn = oci_pconnect("am418419", "rampampam", "labora.mimuw.edu.pl/LABS");
         if (!$conn) {
 			echo "oci_connect failed\n";
 			$e = oci_error();
 			echo $e['message'];
-        } 
-        
+        }
+      
+      $a = 0; $b = 0; $c = 0; $d = 0; $e = 0;
+      $stmt = oci_parse($conn, "SELECT punktyRankingowe FROM HistoriaRankingu where gra = '$gra' and 
+								kto = '$gracz' and idFormuly = 1 order by ktora desc");
+      oci_execute($stmt, OCI_NO_AUTO_COMMIT);
+      
+      
+	  if ($row = oci_fetch_array($stmt, OCI_BOTH))
+		$a = $row[0];
+	  if ($row = oci_fetch_array($stmt, OCI_BOTH))
+		$b = $row[0];
+      if ($row = oci_fetch_array($stmt, OCI_BOTH))
+		$c = $row[0];
+	  if ($row = oci_fetch_array($stmt, OCI_BOTH))
+		$d = $row[0];
+	  if ($row = oci_fetch_array($stmt, OCI_BOTH))
+		$e = $row[0];
+        ?>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+		  var a = <?php echo $a  ?>;
+		  var b = <?php echo $b  ?>;
+		  var c = <?php echo $c  ?>;
+		  var d = <?php echo $d  ?>;
+		  var e = <?php echo $e  ?>;
+        var data = google.visualization.arrayToDataTable([
+          ['', 'Punkty'],
+          ['',  e],
+          ['',  d],
+          ['',  c],
+          ['',  b],
+          ['',  a]
+        ]);
+
+        var options = {
+	      backgroundColor: '#96a2cd',
+          title: 'Ostatnia historia puntków rankingowych w formule +10/-10 * waga',
+          legend: { position: 'bottom' },
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+        chart.draw(data, options);
+      }
+    </script>
+    <TITLE> Panel gry </TITLE>
+  </HEAD>
+  <BODY>
+	   <div class="center">
+	  <H2> <?php echo $gra, ' - ', $gracz; ?> </H2>
+	  <?php
 	  
 	  $stmt = oci_parse($conn, "SELECT count(*) FROM Rozgrywka where gra = '$gra' and ktoWygral = '$gracz'");
       oci_execute($stmt, OCI_NO_AUTO_COMMIT);
@@ -67,12 +120,12 @@
       echo "Przegrane: ", $zagranych - $wygranych, "<BR>";
       echo "Sumarycznie: ", $zagranych, "<BR>";
       
-      // TODO nemesis i dominacja
-      
       echo "<BR><A HREF=\"historia_rozgrywek.php?gracz=".$gracz."&gra=".$gra."\">"."Historia rozgrywek gracza<A><BR>\n";
       
       echo "<BR><H3> Ranking </H3>";
-        
+      echo '<div class = "chart_box">';
+      echo '<div id="curve_chart"  style="width: 600px; height: 300px"></div>';
+      echo '</div>';
       $r_stmt = oci_parse($conn, "SELECT punktyRankingowe, idFormuly FROM Ranking where gra = '$gra' and kto = '$gracz'");
       oci_execute($r_stmt, OCI_NO_AUTO_COMMIT);
       

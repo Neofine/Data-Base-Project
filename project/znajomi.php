@@ -8,6 +8,10 @@
 	  width: 100%;
 	  padding: 10px;
   }
+  a {
+	font-size: 24px;
+	color: hotpink;
+  }
   h2 {
     color: rgb(152, 212, 197);
     text-align: center;
@@ -38,6 +42,7 @@
   </HEAD>
   <BODY>
 	  <H2> <?php echo "Znajomi gracza ".$_GET['gracz'], ':'; ?> </H2>
+	  <div class="center">
 	  <?php
 	  $conn = oci_pconnect("am418419", "rampampam", "labora.mimuw.edu.pl/LABS");
         if (!$conn) {
@@ -63,5 +68,6 @@
 	<FORM ACTION="strona_glowna.php">
     <INPUT TYPE="SUBMIT" class="button button2" VALUE="Strona główna">
 	</FORM>
+	</div>
   </BODY>
 </HTML>

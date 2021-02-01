@@ -9,6 +9,9 @@
 	  width: 100%;
 	  padding: 10px;
   }
+  a {
+	color: hotpink;
+  }
   h2 {
     color: rgb(152, 212, 197);
     text-align: center;
@@ -32,6 +35,15 @@
 }
 .button2:hover {
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+.pro {
+	color: rgb(254,51,27);
+}
+.medium {
+	color: rgb(175,135,222);
+}
+.noob {
+	color: rgb(191,207,76);
 }
 </style>
   <HEAD>
@@ -81,7 +93,7 @@
 			?>
 			  <div class="center">
 			  <FORM <?php echo 'ACTION="dodaj_znajomego.php?kto=', $ja, '&kogo=', $wybrany, "\""?> METHOD="POST">
-			  <INPUT TYPE="SUBMIT" VALUE="Dodaj znajomego">
+			  <INPUT TYPE="SUBMIT" class="button button2" VALUE="Dodaj znajomego">
 			  </FORM>
 			  </div>
 			<?php
@@ -92,13 +104,20 @@
 		  oci_execute($stmt, OCI_NO_AUTO_COMMIT);
 		  echo "<div class="."center".">";
 		  if ($row = oci_fetch_array($stmt, OCI_BOTH)) {
-			echo 'Imię: ', $row[1], '<BR>Nazwisko: ', $row[2], '<BR>Poziom: ', $row[3], '<BR><BR>';
-			
+			if ($row[3] == 'Profesjonalista') {
+			  echo '<div class="pro">';
+		    } else if ($row[3] == 'Sredniozaawansowany') {
+				echo '<div class="medium">';
+			} else {
+				echo '<div class="noob">';
+			}
+			echo '<b>Imię: ', $row[1], '<BR>Nazwisko: ', $row[2], '<BR>Poziom: ', $row[3], '</b><BR><BR>';
+			echo '</div>';
 		  } else {
 			$stmt = oci_parse($conn, "SELECT * FROM GraczSI WHERE login = '$wybrany'");
 			oci_execute($stmt, OCI_NO_AUTO_COMMIT);
 			$row = oci_fetch_array($stmt, OCI_BOTH);
-			echo 'Twórca: ', $row[1], '<BR>Moc procesora: ', $row[2], '<BR><BR>';
+			echo 'Twórca: ', $row[1], '<BR>Moc procesora: ', $row[2], ' GHz', '<BR><BR>';
 		  }
 		  echo "</div><div class="."center".">";
 		  echo "<A HREF=\"panel_gier.php?gracz=".$wybrany."\">"."Panel gier<A>";

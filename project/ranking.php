@@ -4,10 +4,17 @@
   body {
     background-color: rgb(0, 135, 125);
     }
-  .center {
+   .center {
 	  text-align:center;
 	  width: 100%;
 	  padding: 10px;
+  }
+  table.center {
+	  margin-left:auto;
+	  margin-right:auto;
+  }
+  a {
+	color: hotpink;
   }
   h2 {
     color: rgb(152, 212, 197);
@@ -41,7 +48,7 @@ table {
 
 td, th {
   border: 1px solid #dddddd;
-  text-align: left;
+  text-align: center;
   padding: 8px;
 }
 
@@ -69,13 +76,9 @@ tr:nth-child(odd) {
 	  
 	  print"<table_border='2'>";
 	  echo "<H2>Tabela rankingowa gry ".$gra;
-	  if ($formula != '')
-		echo "wyliczony formułą ".$formula;
+
 	  echo "</H2>";
 	  ?>
-	  
-	  <FORM ACTION="strona_glowna.php">
-    <INPUT TYPE="SUBMIT" class="button button2" VALUE="Strona główna">
 	  
 	  <?php
 
@@ -86,7 +89,19 @@ tr:nth-child(odd) {
 			echo $e['message'];
         } 
 
-
+	  if ($formula_id != '') {
+	    $stmt = oci_parse($conn, "SELECT formula, opis from SystemWyliczania where id = $formula_id");
+		oci_execute($stmt, OCI_NO_AUTO_COMMIT);
+		$row = oci_fetch_array($stmt, OCI_BOTH);
+		echo "<H2> Formuła: ".$row[0]."<BR>Opis: ".$row[1]."</H2>";
+	}
+	?>
+	<div class="center">
+	<FORM ACTION="strona_glowna.php">
+    <INPUT TYPE="SUBMIT" class="button button2" VALUE="Strona główna">
+	</FORM>
+	</div>
+	  <?php
 	  if ($formula_id == '') { #wybrana gra ma jedną domyślną formułę
 		  $stmt = oci_parse($conn, "SELECT * FROM Ranking where gra = '$gra' ORDER BY punktyRankingowe DESC");
 		  oci_execute($stmt, OCI_NO_AUTO_COMMIT);
@@ -101,9 +116,7 @@ tr:nth-child(odd) {
 	  }
 	  
 	  ?>
-	  
-	  <div class="center">
-	  <table style="width:50%">
+	  <table style="width:50%" class="center">
 	  <tr>
 		<th>Pozycja</th>
 		<th>Gracz</th>
@@ -122,7 +135,7 @@ tr:nth-child(odd) {
 		}
 		echo "<tr>";
 		echo "<td>".$pozycja."</td>";
-		echo "<td>".$row[0]."</td>";
+	    echo "<td><A HREF=\"profil.php?gracz=".$row[0]."\">".$row[0]."<A></td>";
 		echo "<td>".$row[2]."</td>";
 		echo "</tr>";
 		$ile++;
@@ -130,10 +143,10 @@ tr:nth-child(odd) {
 	  
 	  echo "</table><BR>";
 	  ?>
-	  
+	<div class="center">
 	<FORM ACTION="strona_glowna.php">
     <INPUT TYPE="SUBMIT" class="button button2" VALUE="Strona główna">
-    </div>
 	</FORM>
+	</div>
   </BODY>
 </HTML>

@@ -8,6 +8,10 @@
 	  width: 100%;
 	  padding: 10px;
   }
+  a {
+	font-size: 24px;
+	color: hotpink;
+  }
   h2 {
     color: rgb(152, 212, 197);
     text-align: center;

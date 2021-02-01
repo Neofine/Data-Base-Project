@@ -65,15 +65,16 @@ input[type=password]:focus {
 }
   </STYLE>
   <HEAD>
-    <TITLE> Logowanie </TITLE>
+    <TITLE> Dodawanie gry </TITLE>
   </HEAD>
   <BODY>
-    <H2> Logowanie </H2>
+    <H2> Dodawanie gry </H2>
     <div class="center">
-    <FORM ACTION="sprawdz_login.php" METHOD="POST">  
-      <h3>Login:</h3> <INPUT TYPE="TEXT" NAME="LOGN" placeholder="Login" VALUE="" required><BR><BR>
-      <h3>Hasło:</h3>  <INPUT TYPE="PASSWORD" NAME="PASW" placeholder="E-Mail" VALUE="" required><BR><BR>
-      <INPUT TYPE="SUBMIT" class="button button2" VALUE="Zaloguj">
+    <FORM ACTION="dodaj_gre.php" METHOD="POST">  
+      <h3>Nazwa gry:</h3> <INPUT TYPE="TEXT" NAME="NZW" placeholder="Nazwa" VALUE="" required><BR><BR>
+      <h3>Minimalna liczba graczy:</h3>  <INPUT TYPE="TEXT" NAME="MIN" placeholder="min graczy" VALUE="" required><BR><BR>
+      <h3>Maksymalna liczba graczy:</h3>  <INPUT TYPE="TEXT" NAME="MAX" placeholder="max graczy" VALUE="" required><BR><BR>
+      <INPUT TYPE="SUBMIT" class="button button2" VALUE="Dodaj!">
     </FORM>
     <FORM ACTION="strona_glowna.php">
     <INPUT TYPE="SUBMIT" class="button button2" VALUE="Strona główna">

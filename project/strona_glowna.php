@@ -10,8 +10,12 @@
 	  width: 100%;
 	  padding: 10px;
   }
+  a {
+	color: hotpink;
+  }
   h2 {
     color: rgb(152, 212, 197);
+    font-size: 36px;
     text-align: center;
   }
   h3 {
@@ -59,7 +63,7 @@ img {
   </HEAD>
   <BODY>
 	<div class="center">
-    <H2> Witaj na Kuchrniku! </H2>
+    <H2>    Witaj na Kuchrniku! </H2>
     </div>
       <?php 
 
@@ -96,7 +100,7 @@ img {
       <div class="center">
 	  <h3>Wyszukaj gracza</h3>
 	  <FORM ACTION="profil.php" METHOD="GET">  
-      <INPUT TYPE="TEXT" NAME="gracz" placeholder="Gracz.." VALUE=""><BR>
+      <INPUT TYPE="TEXT" NAME="gracz" placeholder="Gracz.." VALUE="" required><BR>
       <INPUT TYPE="SUBMIT" class="button button2" VALUE="Szukaj">
       </FORM>
 	  </div>
@@ -120,6 +124,14 @@ img {
 	  <FORM ACTION="wybierz_gre_historia.php" METHOD="POST">
       <INPUT TYPE="SUBMIT" class="button button2" VALUE="Historia rozgrywek">
 	  </FORM>
+	  </div>
+	  
+	  <?php if ($_SESSION['LOGIN'] != ''): ?>
+	  <div class="center">
+	  <FORM ACTION="dodaj_gre_input.php" METHOD="POST">
+      <INPUT TYPE="SUBMIT" class="button button2" VALUE="Dodaj nową grę">
+	  </FORM>
+	  <?php endif; ?>
 	  </div>
   </BODY>
 </HTML>

@@ -8,6 +8,10 @@
 	  width: 100%;
 	  padding: 10px;
   }
+  a {
+	font-size: 24px;
+	color: hotpink;
+  }
   h2 {
     color: rgb(152, 212, 197);
     text-align: center;
@@ -38,7 +42,7 @@
   </HEAD>
   <BODY>
 	   <H2> Wybierz grę, której tabele rankingowe chcesz zobaczyć </H2>
-	   <div class="center">
+	  <div class="center">
 	  <?php
 	  $conn = oci_pconnect("am418419", "rampampam", "labora.mimuw.edu.pl/LABS");
         if (!$conn) {
@@ -57,7 +61,7 @@
 	  while (($row = oci_fetch_array($stmt, OCI_BOTH))) {
 		  $stmt2 = oci_parse($conn, "SELECT count(*) from 
 						(SELECT DISTINCT idFormuly FROM Ranking WHERE gra = '$row[0]')");
-		  
+		  oci_execute($stmt2, OCI_NO_AUTO_COMMIT);
 		  $row2 = oci_fetch_array($stmt2, OCI_BOTH);
 		  if ($row2[0] > 1) {
 			  echo "<BR><A HREF=\"wybierz_formule.php?gra=".$row[0]."\">".$row[0]."<A><BR>\n";
